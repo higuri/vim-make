@@ -5,8 +5,8 @@ Make.vim
 Modestly enhanced `make` for Vim.
 
 - Finds the closest parent directory of the current buffer with a Makefile and runs `make` with the passed arguments.
-- If the result is a single line, echo it.
-- Otherwise, output the result to the quickfix buffer.
+- ~~If the result is a single line, echo it.~~
+- ~~Otherwise, output the result to the quickfix buffer.~~
 
 `g:Make_loaded` is set when this script is run.
 
