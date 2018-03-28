@@ -15,7 +15,8 @@ function! Make(args)
 	" Force write.
 	silent update!
 
-	" Find the closest directory to the current file with a [Mm]akefile.
+	" Find the closest directory to the current file
+	" with a {GNUmakefile, [Mm]akefile}.
 	let l:makefile_dir = s:find_makefile_dir()
 
 	" Move to that directory and make.
@@ -51,7 +52,7 @@ function s:find_makefile_dir()
 
 	while 1
 		" Ensure we have only one '/'.
-		if !empty(glob(substitute(l:dir, '/$', '', '') . '/[Mm]akefile'))
+		if !empty(glob(substitute(l:dir, '/$', '', '') . '/{GNUm,[Mm]}akefile'))
 			return l:dir
 		else
 			let l:parent = fnamemodify(l:dir, ':h')
