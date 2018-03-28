@@ -10,40 +10,18 @@
 function! Make(args)
 	" Compile arguments.
 	let l:args = strlen(a:args) ? ' ' . a:args : ''
-	let l:title = expand('%') . ' - Make' . l:args
-
-	" Force write.
-	silent update!
 
 	" Find the closest directory to the current file
 	" with a {GNUmakefile, [Mm]akefile}.
 	let l:makefile_dir = s:find_makefile_dir()
 
-	" Move to that directory and make.
-	let l:out = split(system('cd ' . l:makefile_dir . ' && make' . l:args), "\n")
-	let l:len = len(l:out)
-
-	" Output to quickfix.
-	cgetexpr l:out
-	let w:quickfix_title = l:title
-
-	" If no output, just report success.
-	if l:len == 0
-		" Close quickfix.
-		cclose
-		redraw
-		echo l:title . ' succeeded'
-	" If output is a single line, echo it.
-	elseif l:len == 1
-		" Close quickfix.
-		cclose
-		cc 1
-		redraw
-		echo l:out[0]
-	else
-		execute 'copen'
-		cc 1
-	endif
+	" Move to that directory and execute standard ':make'.
+	let l:_makeprg = &l:makeprg
+	let &l:makeprg = 'make'
+	execute 'lcd' l:makefile_dir
+	execute 'make' l:args
+	execute 'lcd -'
+	let &l:makeprg = l:_makeprg
 endfunction
 
 
