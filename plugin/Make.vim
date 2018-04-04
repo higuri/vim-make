@@ -7,6 +7,10 @@
 " Description: Modestly enhanced `make` for Vim.
 "
 
+if exists("g:Make_loaded")
+    finish
+endif
+
 function! Make(args)
 	" Compile arguments.
 	let l:args = strlen(a:args) ? ' ' . a:args : ''
@@ -49,4 +53,3 @@ endfunction
 command! -nargs=? Make call Make("<args>")
 
 let g:Make_loaded = 1
-
